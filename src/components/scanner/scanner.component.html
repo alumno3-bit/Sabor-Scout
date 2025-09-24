@@ -1,0 +1,44 @@
+<div class="flex flex-col items-center p-4">
+  @if (!imagePreview()) {
+    <div class="w-full max-w-md text-center">
+      <h2 class="text-2xl font-montserrat font-semibold text-amber-400 mb-4">Scan a Beer</h2>
+      <p class="text-gray-400 mb-6">Take a photo of a beer bottle or can to get instant details.</p>
+      
+      <div class="bg-gray-800 border-2 border-dashed border-gray-600 rounded-lg p-8 flex flex-col items-center cursor-pointer hover:bg-gray-700 hover:border-amber-400 transition-colors">
+        <input type="file" accept="image/*" (change)="onFileSelected($event)" class="absolute opacity-0 w-full h-full cursor-pointer" />
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <span class="text-white font-semibold">Tap to Upload Image</span>
+        <span class="text-gray-400 text-sm mt-1">PNG, JPG, WEBP accepted</span>
+      </div>
+    </div>
+  } @else {
+    @if (isLoading()) {
+      <div class="flex flex-col items-center justify-center p-10">
+          <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-amber-400"></div>
+          <p class="mt-4 text-amber-400 font-semibold">Analyzing brew...</p>
+      </div>
+    }
+
+    @if (error()) {
+      <div class="bg-red-900/50 border border-red-700 text-red-200 p-4 rounded-lg text-center max-w-md">
+        <p class="font-bold">Scan Failed</p>
+        <p class="text-sm">{{ error() }}</p>
+        <button (click)="reset()" class="mt-4 bg-amber-500 text-gray-900 font-bold py-2 px-4 rounded-lg hover:bg-amber-400 transition-colors">
+          Try Again
+        </button>
+      </div>
+    }
+    
+    @if (identifiedBeer(); as beer) {
+      <div class="w-full">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-montserrat font-semibold text-amber-400">Scan Result</h2>
+          <button (click)="reset()" class="text-amber-400 hover:text-amber-300 transition-colors font-semibold">Scan Another</button>
+        </div>
+        <app-beer-details [beer]="beer"></app-beer-details>
+      </div>
+    }
+  }
+</div>

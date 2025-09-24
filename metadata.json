@@ -1,0 +1,7 @@
+{
+  "name": "Sabor Scout",
+  "description": "An AI-powered platform for the craft beer industry. Discover, learn about, and rate beers with our consumer module, or optimize recipes and quality control with our producer tools.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
